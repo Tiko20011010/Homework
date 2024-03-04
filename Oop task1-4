@@ -1,0 +1,66 @@
+class Vehicle:
+    vehicle_count = 0
+
+    def __init__(self,make,model):
+        self.make = make
+        self.model = model
+        Vehicle.vehicle_count += 1
+
+   
+    def getVehicleCount():
+        return Vehicle.vehicle_count    
+    
+    def start_engine(self):
+        print("Engine Started")
+
+    def __repr__(self):
+        return f"{self.make} {self.model}"
+
+
+class ElectricVehicle:
+    def __init__(self,battery_capacity):
+        self.battery_capacity = battery_capacity
+
+
+
+class Car(Vehicle):
+    def __init__(self,make,model,number_of_wheels = 4):
+        super().__init__(make,model)
+        self.number_of_wheels = number_of_wheels
+        
+    def start_engine(self):
+        print("Car Engine Started")
+        super().start_engine()
+
+    def __repr__(self):
+        return f"{self.make}  {self.model}  -   {self.number_of_wheels}"
+
+
+class ElectricCar(Car,ElectricVehicle):
+    def __init__(self, make, model , battery_capacity, number_of_wheels = 4):
+        Car.__init__(self, make, model, number_of_wheels)
+        ElectricVehicle.__init__(self, battery_capacity)
+
+    def __repr__(self):
+        return f"{self.make} {self.model}  {self.number_of_wheels} wheels  {self.battery_capacity} kwh"
+
+
+
+
+print("vehicle count : ", Vehicle.getVehicleCount())
+
+myVehicle = Vehicle("bmw", "m3")
+print(myVehicle)
+myVehicle.start_engine()
+
+myCar = Car("mercedes","cls")
+print(myCar)
+myCar.start_engine()
+
+print("vehicle count : ", Vehicle.getVehicleCount())
+
+
+myElectricCar = ElectricCar("tesla", "model S" ,"100")
+print(myElectricCar)
+
+print(ElectricCar.mro())
